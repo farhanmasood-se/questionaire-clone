@@ -278,7 +278,7 @@ contactForm.addEventListener("submit", async function (event) {
           smtpUser: "matchtool15@outlook.com",
           smtpPass: "Matchtool123@",
           smtpFrom: "matchtool15@outlook.com",
-          smtpTo: "farhanmasood156@gmail.com",
+          smtpTo: "info@matchtool.nl",
         }),
       }
     );
