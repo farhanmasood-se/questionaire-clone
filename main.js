@@ -225,7 +225,11 @@ async function createResponseEntry(userResponses, name) {
           },
         })
       )
-      .then((entry) => {})
+      .then((entry) => {
+        contactForm.style.display = "none";
+        tinderContainer.style.display = "none";
+        thanksModalWrapper.style.display = "flex";
+      })
       .catch(console.error);
   } catch (error) {
     console.error(error);
