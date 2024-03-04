@@ -1,6 +1,5 @@
 "use strict";
 
-console.log(process.env.hy);
 var client = contentful.createClient({
   space: "ke0oshiiblfc",
   accessToken: "cgVRfs2SbmuadP9cC42NO1i1DUIg_YNJBW78YTj4CQ0",
