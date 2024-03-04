@@ -307,6 +307,10 @@ form button {
     height: 300px;
   }
 
+  .tinder--buttons {
+    bottom: 60px;
+  }
+
   form header p {
     font-size: 30px;
   }
