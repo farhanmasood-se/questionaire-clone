@@ -308,7 +308,8 @@ form button {
   }
 
   .tinder--buttons {
-    bottom: 60px;
+    position: static;
+    flex: 0 0 200px;
   }
 
   form header p {
