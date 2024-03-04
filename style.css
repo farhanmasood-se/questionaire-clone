@@ -10,8 +10,8 @@
 
 body {
   background: #fefbcc;
-  overflow: hidden;
   font-family: "Poppins", sans-serif;
+  overflow: hidden;
 }
 
 .tinder {
@@ -78,7 +78,6 @@ body {
   display: inline-block;
   width: 90vw;
   max-width: 400px;
-  height: 400px;
   background: #ffffff;
   padding-bottom: 40px;
   border-radius: 8px;
@@ -88,6 +87,7 @@ body {
   transition: all 0.3s ease-in-out;
   cursor: -webkit-grab;
   cursor: grab;
+  height: 440px;
 }
 
 .moving.tinder--card {
@@ -97,8 +97,8 @@ body {
 }
 
 .tinder--card img {
-  height: 250px;
-  width: 100%;
+  height: 300px;
+  width: 400px;
   pointer-events: none;
 }
 
@@ -110,10 +110,11 @@ body {
 }
 
 .tinder--buttons {
-  flex: 0 0 100px;
+  position: relative;
   text-align: center;
   padding-top: 20px;
   padding-bottom: 20px;
+  bottom: 20px;
 }
 
 .tinder--buttons button {
@@ -190,7 +191,7 @@ form header img {
   object-fit: cover;
 }
 
-form>.text {
+form > .text {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -200,7 +201,7 @@ form>.text {
   color: #383a3b;
 }
 
-form>.text p {
+form > .text p {
   text-align: start;
 }
 
@@ -239,8 +240,42 @@ form button {
   margin-top: 10px;
 }
 
+.thanks-model-wrapper {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-@media screen and (max-width:900px) {
+.thanks-model {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.thanks-modal-content {
+  margin: 0 20px;
+  padding: 40px 20px;
+  background: #fff;
+  border-radius: 20px;
+}
+
+.thanks-modal-content h1,
+.thanks-modal-content p {
+  text-align: center;
+}
+
+.thanks-modal-content h1 {
+  font-size: 26px;
+  color: rgb(76, 65, 225);
+}
+
+.thanks-modal-content p {
+  font-size: 16px;
+  color: #000;
+  font-weight: 400;
+}
+
+@media screen and (max-width: 900px) {
   .tinder--card {
     height: 320px;
   }
@@ -266,7 +301,7 @@ form button {
   }
 }
 
-@media screen and (max-width:600px) {
+@media screen and (max-width: 600px) {
   .tinder--card {
     width: 100%;
     height: 300px;
@@ -277,7 +312,7 @@ form button {
   }
 }
 
-@media screen and (max-width:450px) {
+@media screen and (max-width: 450px) {
   .tinder--card {
     width: 320px;
     height: 300px;
