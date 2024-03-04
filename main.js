@@ -225,11 +225,7 @@ async function createResponseEntry(userResponses, name) {
           },
         })
       )
-      .then((entry) => {
-        contactForm.style.display = "none";
-        tinderContainer.style.display = "none";
-        thanksModalWrapper.style.display = "flex";
-      })
+      .then((entry) => {})
       .catch(console.error);
   } catch (error) {
     console.error(error);
@@ -284,6 +280,10 @@ contactForm.addEventListener("submit", async function (event) {
     );
     if (!response.ok) {
       throw new Error("Failed to submit form");
+    } else {
+      contactForm.style.display = "none";
+      tinderContainer.style.display = "none";
+      thanksModalWrapper.style.display = "flex";
     }
   } catch (error) {
     console.error("Error submitting form:", error.message);
