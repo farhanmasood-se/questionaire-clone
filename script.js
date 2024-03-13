@@ -5,6 +5,7 @@ var client = contentful.createClient({
   accessToken: "cgVRfs2SbmuadP9cC42NO1i1DUIg_YNJBW78YTj4CQ0",
 });
 
+var loader = document.querySelector(".loader");
 var tinderContainer = document.querySelector(".tinder");
 var tinderButtons = document.querySelector(".tinder--buttons");
 var allCards;
@@ -15,17 +16,32 @@ const thanksModalWrapper = document.querySelector(".thanks-model-wrapper");
 thanksModalWrapper.style.display = "none";
 var userResponses = [];
 
+loader.style.display = "block";
+
+const currentUrl = window.location.href;
+const url = new URL(currentUrl);
+
+const nameParam = url.searchParams.get("quiz");
+
+console.log(nameParam);
+
 client
   .getEntries({
-    content_type: "questions",
+    content_type: nameParam,
   })
   .then(function (response) {
+    loader.style.display = "block";
+
     createQuestionCards(response.items);
     allCards = document.querySelectorAll(".tinder--card");
     initCards();
     attachSwipeListeners();
+
+    // loader.style.display = "none";
   })
   .catch(function (error) {
+    // loader.style.display = "none";
+
     console.error("Error fetching entries:", error);
   });
 
