@@ -30,17 +30,15 @@ client
     content_type: nameParam,
   })
   .then(function (response) {
-    loader.style.display = "block";
-
     createQuestionCards(response.items);
     allCards = document.querySelectorAll(".tinder--card");
     initCards();
     attachSwipeListeners();
 
-    // loader.style.display = "none";
+    loader.style.display = "none";
   })
   .catch(function (error) {
-    // loader.style.display = "none";
+    loader.style.display = "none";
 
     console.error("Error fetching entries:", error);
   });
