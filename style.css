@@ -118,6 +118,7 @@ body {
 }
 
 .tinder--buttons button {
+  cursor: pointer;
   border-radius: 50%;
   line-height: 90px;
   width: 90px;
@@ -227,6 +228,7 @@ form input::placeholder {
 }
 
 form button {
+  cursor: pointer;
   align-self: flex-end;
   padding: 12px;
   outline: 0;

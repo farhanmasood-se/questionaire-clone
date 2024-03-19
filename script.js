@@ -23,8 +23,6 @@ const url = new URL(currentUrl);
 
 const nameParam = url.searchParams.get("quiz");
 
-console.log(nameParam);
-
 client
   .getEntries({
     content_type: nameParam,
@@ -45,10 +43,11 @@ client
 
 client
   .getEntries({
-    content_type: "contactFormContent",
+    content_type: `${nameParam}ContactForm`,
   })
   .then(function (response) {
     if (response.items.length > 0) {
+      console.log(response.items[0]);
       updateContactForm(response.items[0]);
     }
   })
@@ -62,14 +61,50 @@ function updateContactForm(formData) {
   const descriptionText = document.querySelector(
     ".contact-form .text p:first-of-type"
   );
+  const contactForm = document.querySelector(".contact-form");
+  const submitButton = document.querySelector(".contact-form button");
 
-  header.textContent = formData.fields.heading;
+  let headingText = "";
+  if (
+    formData.fields.heading &&
+    formData.fields.heading.content &&
+    formData.fields.heading.content[0]
+  ) {
+    headingText = formData.fields.heading.content[0].content[0].value;
+  }
+  header.textContent = headingText;
 
   if (formData.fields.image && formData.fields.image.fields.file) {
-    headerImg.src = formData.fields.image.fields.file.url;
+    headerImg.src = "https:" + formData.fields.image.fields.file.url;
   }
 
-  descriptionText.textContent = formData.fields.description;
+  let description = "";
+  if (
+    formData.fields.description &&
+    formData.fields.description.content &&
+    formData.fields.description.content[0]
+  ) {
+    description = formData.fields.description.content[0].content[0].value;
+  }
+  descriptionText.textContent = description;
+
+  if (
+    formData.fields.backgroundColor &&
+    formData.fields.backgroundColor.content &&
+    formData.fields.backgroundColor.content[0]
+  ) {
+    contactForm.style.backgroundColor =
+      formData.fields.backgroundColor.content[0].content[0].value;
+  }
+
+  if (
+    formData.fields.button &&
+    formData.fields.button.content &&
+    formData.fields.button.content[0]
+  ) {
+    submitButton.textContent =
+      formData.fields.button.content[0].content[0].value;
+  }
 }
 
 function createQuestionCards(questions) {
@@ -228,7 +263,7 @@ async function createResponseEntry(userResponses, name) {
       .getSpace("ke0oshiiblfc")
       .then((space) => space.getEnvironment("master"))
       .then((environment) =>
-        environment.createEntry("userResponses", {
+        environment.createEntry(`${nameParam}UserResponses`, {
           fields: {
             name: {
               "en-US": name,
