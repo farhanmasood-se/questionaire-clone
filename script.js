@@ -1,27 +1,27 @@
-"use strict";
+'use strict';
 
 var client = contentful.createClient({
-  space: "ke0oshiiblfc",
-  accessToken: "cgVRfs2SbmuadP9cC42NO1i1DUIg_YNJBW78YTj4CQ0",
+  space: 'ke0oshiiblfc',
+  accessToken: 'cgVRfs2SbmuadP9cC42NO1i1DUIg_YNJBW78YTj4CQ0',
 });
 
-var loader = document.querySelector(".loader");
-var tinderContainer = document.querySelector(".tinder");
-var tinderButtons = document.querySelector(".tinder--buttons");
+var loader = document.querySelector('.loader');
+var tinderContainer = document.querySelector('.tinder');
+var tinderButtons = document.querySelector('.tinder--buttons');
 var allCards;
-var nope = document.getElementById("nope");
-var love = document.getElementById("love");
-const contactForm = document.querySelector(".contact-form");
-const thanksModalWrapper = document.querySelector(".thanks-model-wrapper");
-thanksModalWrapper.style.display = "none";
+var nope = document.getElementById('nope');
+var love = document.getElementById('love');
+const contactForm = document.querySelector('.contact-form');
+const thanksModalWrapper = document.querySelector('.thanks-model-wrapper');
+thanksModalWrapper.style.display = 'none';
 var userResponses = [];
 
-loader.style.display = "block";
+loader.style.display = 'block';
 
 const currentUrl = window.location.href;
 const url = new URL(currentUrl);
 
-const nameParam = url.searchParams.get("quiz");
+const nameParam = url.searchParams.get('quiz');
 
 client
   .getEntries({
@@ -29,21 +29,21 @@ client
   })
   .then(function (response) {
     createQuestionCards(response.items);
-    allCards = document.querySelectorAll(".tinder--card");
+    allCards = document.querySelectorAll('.tinder--card');
     initCards();
     attachSwipeListeners();
 
-    loader.style.display = "none";
+    loader.style.display = 'none';
   })
   .catch(function (error) {
-    loader.style.display = "none";
+    loader.style.display = 'none';
 
-    console.error("Error fetching entries:", error);
+    console.error('Error fetching entries:', error);
   });
 
 client
   .getEntries({
-    content_type: `${nameParam}ContactForm`,
+    content_type: `${nameParam}_contact_form`,
   })
   .then(function (response) {
     if (response.items.length > 0) {
@@ -52,19 +52,19 @@ client
     }
   })
   .catch(function (error) {
-    console.error("Error fetching contact form content:", error);
+    console.error('Error fetching contact form content:', error);
   });
 
 function updateContactForm(formData) {
-  const header = document.querySelector(".contact-form header p");
-  const headerImg = document.querySelector(".contact-form header img");
+  const header = document.querySelector('.contact-form header p');
+  const headerImg = document.querySelector('.contact-form header img');
   const descriptionText = document.querySelector(
-    ".contact-form .text p:first-of-type"
+    '.contact-form .text p:first-of-type'
   );
-  const contactForm = document.querySelector(".contact-form");
-  const submitButton = document.querySelector(".contact-form button");
+  const contactForm = document.querySelector('.contact-form');
+  const submitButton = document.querySelector('.contact-form button');
 
-  let headingText = "";
+  let headingText = '';
   if (
     formData.fields.heading &&
     formData.fields.heading.content &&
@@ -75,10 +75,10 @@ function updateContactForm(formData) {
   header.textContent = headingText;
 
   if (formData.fields.image && formData.fields.image.fields.file) {
-    headerImg.src = "https:" + formData.fields.image.fields.file.url;
+    headerImg.src = 'https:' + formData.fields.image.fields.file.url;
   }
 
-  let description = "";
+  let description = '';
   if (
     formData.fields.description &&
     formData.fields.description.content &&
@@ -108,19 +108,19 @@ function updateContactForm(formData) {
 }
 
 function createQuestionCards(questions) {
-  const cardsContainer = document.querySelector(".tinder--cards");
+  const cardsContainer = document.querySelector('.tinder--cards');
 
   questions.forEach((question, index) => {
-    const card = document.createElement("div");
-    card.className = "tinder--card";
+    const card = document.createElement('div');
+    card.className = 'tinder--card';
 
     const questionText = question.fields.question;
-    card.setAttribute("data-question", questionText);
+    card.setAttribute('data-question', questionText);
 
-    const img = document.createElement("img");
+    const img = document.createElement('img');
     img.src = question.fields.image.fields.file.url;
 
-    const h3 = document.createElement("h3");
+    const h3 = document.createElement('h3');
     h3.textContent = question.fields.question;
 
     card.appendChild(img);
@@ -131,47 +131,47 @@ function createQuestionCards(questions) {
 }
 
 function initCards() {
-  var newCards = document.querySelectorAll(".tinder--card:not(.removed)");
+  var newCards = document.querySelectorAll('.tinder--card:not(.removed)');
 
   newCards.forEach(function (card, index) {
     card.style.zIndex = allCards.length - index;
   });
 
-  tinderContainer.classList.add("loaded");
+  tinderContainer.classList.add('loaded');
 }
 
 function attachSwipeListeners() {
   allCards.forEach(function (el) {
     var hammertime = new Hammer(el);
 
-    hammertime.on("pan", function (event) {
-      el.classList.add("moving");
-      tinderContainer.classList.toggle("tinder_love", event.deltaX > 0);
-      tinderContainer.classList.toggle("tinder_nope", event.deltaX < 0);
+    hammertime.on('pan', function (event) {
+      el.classList.add('moving');
+      tinderContainer.classList.toggle('tinder_love', event.deltaX > 0);
+      tinderContainer.classList.toggle('tinder_nope', event.deltaX < 0);
 
       var xMulti = event.deltaX * 0.03;
       var yMulti = event.deltaY / 80;
       var rotate = xMulti * yMulti;
 
       event.target.style.transform =
-        "translate(" +
+        'translate(' +
         event.deltaX +
-        "px, " +
+        'px, ' +
         event.deltaY +
-        "px) rotate(" +
+        'px) rotate(' +
         rotate +
-        "deg)";
+        'deg)';
     });
 
-    hammertime.on("panend", function (event) {
-      el.classList.remove("moving");
-      tinderContainer.classList.remove("tinder_love");
-      tinderContainer.classList.remove("tinder_nope");
+    hammertime.on('panend', function (event) {
+      el.classList.remove('moving');
+      tinderContainer.classList.remove('tinder_love');
+      tinderContainer.classList.remove('tinder_nope');
 
       var moveOutWidth = document.body.clientWidth;
       var keep = Math.abs(event.deltaX) < 80 || Math.abs(event.velocityX) < 0.5;
 
-      event.target.classList.toggle("removed", !keep);
+      event.target.classList.toggle('removed', !keep);
 
       if (!keep) {
         var endX = Math.max(
@@ -180,22 +180,22 @@ function attachSwipeListeners() {
         );
         var toX = event.deltaX > 0 ? endX : -endX;
         event.target.style.transform =
-          "translate(" + toX + "px, -100px) rotate(-30deg)";
+          'translate(' + toX + 'px, -100px) rotate(-30deg)';
       } else {
-        event.target.style.transform = "";
+        event.target.style.transform = '';
       }
 
-      var questionText = event.target.getAttribute("data-question");
+      var questionText = event.target.getAttribute('data-question');
       var responseObj = {
         question: questionText,
-        response: event.deltaX > 0 ? "Yes" : "No",
+        response: event.deltaX > 0 ? 'Yes' : 'No',
       };
       userResponses.push(responseObj);
 
       if (!areCardsLeft()) {
-        contactForm.classList.add("active");
-        love.style.display = "none";
-        nope.style.display = "none";
+        contactForm.classList.add('active');
+        love.style.display = 'none';
+        nope.style.display = 'none';
       }
 
       initCards();
@@ -203,48 +203,48 @@ function attachSwipeListeners() {
   });
 }
 
-nope.addEventListener("click", createButtonListener(false));
-love.addEventListener("click", createButtonListener(true));
+nope.addEventListener('click', createButtonListener(false));
+love.addEventListener('click', createButtonListener(true));
 
 function createButtonListener(love) {
   return function (event) {
-    var cards = document.querySelectorAll(".tinder--card:not(.removed)");
+    var cards = document.querySelectorAll('.tinder--card:not(.removed)');
     var moveOutWidth = document.body.clientWidth * 1.5;
 
     if (cards.length === 0) return;
 
     var card = cards[0];
-    card.classList.add("removed");
+    card.classList.add('removed');
 
-    var questionText = card.getAttribute("data-question");
+    var questionText = card.getAttribute('data-question');
     var responseObj = {
       question: questionText,
-      response: love ? "Yes" : "No",
+      response: love ? 'Yes' : 'No',
     };
     userResponses.push(responseObj);
 
     if (love) {
       card.style.transform =
-        "translate(" + moveOutWidth + "px, -100px) rotate(-30deg)";
-      tinderContainer.classList.add("tinder_love");
+        'translate(' + moveOutWidth + 'px, -100px) rotate(-30deg)';
+      tinderContainer.classList.add('tinder_love');
     } else {
       card.style.transform =
-        "translate(-" + moveOutWidth + "px, -100px) rotate(30deg)";
-      tinderContainer.classList.add("tinder_nope");
+        'translate(-' + moveOutWidth + 'px, -100px) rotate(30deg)';
+      tinderContainer.classList.add('tinder_nope');
     }
 
     setTimeout(function () {
-      tinderContainer.classList.remove("tinder_love", "tinder_nope");
+      tinderContainer.classList.remove('tinder_love', 'tinder_nope');
     }, 300);
 
     if (!areCardsLeft()) {
-      contactForm.classList.add("active");
-      tinderButtons.style.display = "none";
+      contactForm.classList.add('active');
+      tinderButtons.style.display = 'none';
       if (love) {
-        love.style.display = "none";
+        love.style.display = 'none';
       }
       if (nope) {
-        nope.style.display = "none";
+        nope.style.display = 'none';
       }
     }
 
@@ -256,28 +256,28 @@ function createButtonListener(love) {
 async function createResponseEntry(userResponses, name) {
   try {
     var client1 = createClient({
-      accessToken: "CFPAT-zRR4BXhLNQDUuSJjiorbjOq2AtHODNJy4ZeKIf09vd0",
+      accessToken: 'CFPAT-zRR4BXhLNQDUuSJjiorbjOq2AtHODNJy4ZeKIf09vd0',
     });
 
     client1
-      .getSpace("ke0oshiiblfc")
-      .then((space) => space.getEnvironment("master"))
+      .getSpace('ke0oshiiblfc')
+      .then((space) => space.getEnvironment('master'))
       .then((environment) =>
-        environment.createEntry(`${nameParam}UserResponses`, {
+        environment.createEntry(`${nameParam}_user_responses`, {
           fields: {
             name: {
-              "en-US": name,
+              'en-US': name,
             },
             response: {
-              "en-US": userResponses,
+              'en-US': userResponses,
             },
           },
         })
       )
       .then((entry) => {
-        contactForm.style.display = "none";
-        tinderContainer.style.display = "none";
-        thanksModalWrapper.style.display = "flex";
+        contactForm.style.display = 'none';
+        tinderContainer.style.display = 'none';
+        thanksModalWrapper.style.display = 'flex';
       })
       .catch(console.error);
   } catch (error) {
@@ -287,17 +287,17 @@ async function createResponseEntry(userResponses, name) {
 
 function areCardsLeft() {
   const remainingCards = document.querySelectorAll(
-    ".tinder--card:not(.removed)"
+    '.tinder--card:not(.removed)'
   );
   return remainingCards.length > 0;
 }
 
-contactForm.addEventListener("submit", async function (event) {
+contactForm.addEventListener('submit', async function (event) {
   event.preventDefault();
 
-  const name = document.getElementById("name").value;
-  const phone = document.getElementById("phone").value;
-  const email = document.getElementById("email").value;
+  const name = document.getElementById('name').value;
+  const phone = document.getElementById('phone').value;
+  const email = document.getElementById('email').value;
 
   var userResponse = {
     name: name,
@@ -310,35 +310,35 @@ contactForm.addEventListener("submit", async function (event) {
 
   try {
     const response = await fetch(
-      "https://questionaire-peach.vercel.app/api/email",
+      'https://questionaire-peach.vercel.app/api/email',
       {
-        method: "POST",
-        mode: "no-cors",
+        method: 'POST',
+        mode: 'no-cors',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           fullName: name,
           phoneNumber: phone,
           email: email,
           answers: userResponses,
-          smtpHost: "smtp-mail.outlook.com",
-          smtpPort: "587",
-          smtpUser: "matchtool15@outlook.com",
-          smtpPass: "Matchtool123@",
-          smtpFrom: "matchtool15@outlook.com",
-          smtpTo: "info@matchtool.nl",
+          smtpHost: 'smtp-mail.outlook.com',
+          smtpPort: '587',
+          smtpUser: 'matchtool15@outlook.com',
+          smtpPass: 'Matchtool123@',
+          smtpFrom: 'matchtool15@outlook.com',
+          smtpTo: 'info@matchtool.nl',
         }),
       }
     );
     if (!response.ok) {
-      throw new Error("Failed to submit form");
+      throw new Error('Failed to submit form');
     } else {
-      contactForm.style.display = "none";
-      tinderContainer.style.display = "none";
-      thanksModalWrapper.style.display = "flex";
+      contactForm.style.display = 'none';
+      tinderContainer.style.display = 'none';
+      thanksModalWrapper.style.display = 'flex';
     }
   } catch (error) {
-    console.error("Error submitting form:", error.message);
+    console.error('Error submitting form:', error.message);
   }
 });
